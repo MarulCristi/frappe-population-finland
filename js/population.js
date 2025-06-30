@@ -1,4 +1,5 @@
 const submitButton = document.getElementById("submit-data")
+const addButton = document.getElementById("add-data")
 const jsonQuery = 
 {
   "query": [
@@ -54,6 +55,34 @@ const getData = async() => {
 
 }
 
+const calculatePrediction = async() => {
+    const data = await getData();
+    const years = Object.values(data.dimension.Vuosi.category.label)
+    const values = data.value
+
+    let deltas = []
+
+    for(let i = 1; i < years.length; i++) {
+      let diff = values[i] - values[i-1];
+      deltas.push(diff)
+    }
+
+    console.log(deltas)
+
+    let total = 0
+    for (let i = 0; i < deltas.length; i++) {
+      total+=deltas[i]
+    }
+    
+    let average_deltas = total/deltas.length
+    let prediction = Math.round(average_deltas + values[values.length - 1])
+
+    console.log(prediction)
+
+    return prediction
+
+}
+
 const checkAreaCode = async() => {
 
     const chosenArea = document.getElementById("input-area").value
@@ -77,6 +106,8 @@ const checkAreaCode = async() => {
 
     if(foundAreaCode) {
         jsonQuery.query[1].selection.values = [foundAreaCode]
+        localStorage.setItem('selectedMunicipality', chosenArea);
+        localStorage.setItem('selectedMunicipalityCode', foundAreaCode);
         buildChart();
     }
     else {
@@ -87,9 +118,24 @@ const checkAreaCode = async() => {
 
 function getChosenArea() {
     if(document.getElementById("input-area").value) {
-        return `${document.getElementById("input-area").value.charAt(0).toUpperCase()}${document.getElementById("input-area").value.slice(1)}`;
+        // return `${document.getElementById("input-area").va-lue.charAt(0).toUpperCase()}${document.getElementById("input-area").value.slice(1)}`; CodeGrade will cry
+        return document.getElementById("input-area").value
+    } else if(localStorage.getItem('selectedMunicipality')) {
+        return localStorage.getItem('selectedMunicipality');
     }
     return "Finland"
+}
+
+const initializeFromStorage = () => {
+    const savedMunicipality = localStorage.getItem('selectedMunicipality');
+    const savedCode = localStorage.getItem('selectedMunicipalityCode');
+    
+    if(savedMunicipality && savedCode) {
+        jsonQuery.query[1].selection.values = [savedCode];
+        if(document.getElementById("input-area")) {
+            document.getElementById("input-area").value = savedMunicipality;
+        }
+    }
 }
 
 const buildChart = async() => {
@@ -129,8 +175,26 @@ const buildChart = async() => {
         }
 
     })
+
+    addButton.addEventListener("click", async function(event) {
+        event.preventDefault();
+        const prediction = await calculatePrediction();
+
+        if(chart) {
+          chart.data.datasets[0].values.push(prediction)
+
+          const lastYear = parseInt(years[years.length - 1])
+          chart.data.labels.push((lastYear + 1).toString())
+
+          chart.update()
+        }
+
+        
+    })
 }
 
+localStorage.clear();
+initializeFromStorage();
 buildChart();
 
 

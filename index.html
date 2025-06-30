@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Frappe ~ Stats</title>
-    <script src="js/script.js" defer></script>
+    <title>Population Statistics</title>
+    <script type="module" src="js/population.js" defer></script>
     <script src="https://unpkg.com/frappe-charts@1.2.4/dist/frappe-charts.min.iife.js"></script>
 </head>
 <body>
@@ -14,5 +14,7 @@
         <button id="submit-data">Submit Data</button>
     </form>
     <div id="chart"></div>
+    <button id="add-data">View estimative data</button>
+    <button id="navigation" onclick="location.href='newchart.html'">View birth and death charts</button>
 </body>
 </html>
