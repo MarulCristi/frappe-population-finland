@@ -4,17 +4,21 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Population Statistics</title>
-    <script type="module" src="js/population.js" defer></script>
+    <script src="js/population.js" defer></script>
     <script src="https://unpkg.com/frappe-charts@1.2.4/dist/frappe-charts.min.iife.js"></script>
+    <link rel="stylesheet" href="css/styles.css">
 </head>
 <body>
+    
     <form>
-        <label>Enter municipality</label>
+        <label class="stretchy-label">Enter municipality:</label>
         <input type="text" id="input-area">
         <button id="submit-data">Submit Data</button>
     </form>
     <div id="chart"></div>
-    <button id="add-data">View estimative data</button>
-    <button id="navigation" onclick="location.href='newchart.html'">View birth and death charts</button>
+    <button id="add-data">View Next Year</button>
+    <button id="navigation" onclick="location.href='birthsdeaths.html'">Birth and Deaths Stats</button>
+    <button id="navigation-1" onclick="location.href='migration.html'">Immigration and Emigration Stats</button>
+    <button id="navigation-2" onclick="location.href='marriages.html'">Marriages and Divorces Stats</button>
 </body>
 </html>

@@ -184,7 +184,11 @@ const buildChart = async() => {
           chart.data.datasets[0].values.push(prediction)
 
           const lastYear = parseInt(years[years.length - 1])
-          chart.data.labels.push((lastYear + 1).toString())
+          const nextYear = (lastYear + 1).toString()
+          chart.data.labels.push((nextYear))
+
+          jsonQuery.query[0].selection.values.push(nextYear)
+
 
           chart.update()
         }
@@ -193,7 +197,7 @@ const buildChart = async() => {
     })
 }
 
-localStorage.clear();
+// localStorage.clear();
 initializeFromStorage();
 buildChart();
 

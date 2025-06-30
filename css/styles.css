@@ -1,0 +1,40 @@
+
+
+body {
+    text-align: center;
+    background-color: #e6e6e6;
+}
+
+button {
+    background-color: rgb(199, 255, 236);
+    box-shadow: 5px 5px 5px lightblue;
+}
+
+button:hover {
+    background-color: yellow;
+}
+
+input {
+    width: 100px;
+    margin: 8px 0;
+    box-sizing: border-box;
+}
+
+input:focus {
+  background-color: lightblue;
+}
+
+
+.stretchy-label {
+    position: relative;
+    font-family: "Montserrat", "Arial", sans-serif;
+    font-weight: 600;
+    display: inline-block;
+    margin-bottom: 10px;
+    font-size: 1.2em;
+    color: #333;
+    transition: all 0.3s ease;
+    transform-origin: center;
+    perspective: 1000px;
+}
+
